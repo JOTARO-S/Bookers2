@@ -1,2 +1,51 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<head>
+  <script src="https://kit.fontawesome.com/abbba3d392.js" crossorigin="anonymous"></script>  
+</head>
+
+<main>
+<% if @post_books.errors.any? %>
+  <ul class="alert alert-danger" role="alert">
+    <h6 class="alert-heading">
+      <%= @post_books.errors.count %>件のエラーが発生しました
+    </h6>
+      <% @post_books.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+  </ul>
+<% end %>
+
+<div class="profile-container">
+  <h1>User info</h1>
+    <%= image_tag @user.get_profile_image(100,100) %>
+  <h3 class="profile-name">name <%= @user.name %></h3>
+  <h3 class="profile-name">introduction <%= @user.name %></h3>
+  <% if @user.id == current_user.id %>
+    <p><%= link_to "<i class="fa-solid fa-user-gear"></i>", edit_user_path(@user) %></p>
+  <% end %>
+</div>
+
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light p-4 mb-0">New book</h5>
+      <div class="form-body p-4">
+
+          <div class="input-group mb-3 mt-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text" aria-hidden="true"><i class="fas fa-building"></i></span>
+            </div>
+            <%= f.text_field :title, class:"form-control", placeholder:"" %>
+          </div>
+          <%= f.text_area :opinion, class:"form-control", rows:"3", placeholder:"" %>
+          <%= f.submit 'Create Book', class:"btn btn-lg btn-block btn-info mt-4" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h1>Users</h1>
+<%= render 'post_images/list', post_images: @post_books %>
+
+</main>
